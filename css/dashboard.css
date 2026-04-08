@@ -1,0 +1,186 @@
+body {
+  margin: 0;
+  background: #f8fafc;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.topbar small {
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.topbar h1 {
+  margin: 0.4rem 0 0;
+  font-size: 2rem;
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.top-actions button {
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: none;
+  background: white;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+.top-actions .export {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* =========================
+   KPI CARDS
+========================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  transition: 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card small {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.stat-card h2 {
+  margin-top: 0.8rem;
+  font-size: 2rem;
+}
+
+/* =========================
+   CHART + PERFORMANCE
+========================= */
+.chart-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.chart-card,
+.performance-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+/* 🔥 REAL CHART FIX */
+.chart-card {
+  min-height: 360px;
+}
+
+#qualityTrendChart {
+  width: 100% !important;
+  height: 280px !important;
+  margin-top: 1rem;
+}
+
+/* Progress */
+.progress-item {
+  margin-top: 1rem;
+}
+
+.progress-item span {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background: #22c55e;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-card {
+  margin-top: 1.5rem;
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-layout {
+    grid-template-columns: 1fr;
+  }
+}

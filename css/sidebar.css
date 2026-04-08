@@ -1,0 +1,70 @@
+#sidebar-container {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sidebar {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.03);
+}
+
+.logo span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.logo small {
+  display: block;
+  color: #94a3b8;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.menu {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.menu a {
+  padding: 1rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #334155;
+  font-weight: 700;
+  transition: 0.25s ease;
+}
+
+.menu a:hover {
+  background: #f1f5f9;
+}
+
+.menu a.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.new-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 16px;
+  background: #22c55e;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(34, 197, 94, 0.2);
+}

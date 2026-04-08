@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  background: #f8fafc;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.compliance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.compliance-card,
+.table-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+.table-card {
+  margin-top: 1.5rem;
+}
+
+.compliance-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 700;
+}
+
+.status {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status.compliant {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.warning {
+  background: #fef3c7;
+  color: #ca8a04;
+}
+
+.status.critical {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}

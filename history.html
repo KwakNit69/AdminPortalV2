@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch History</title>
+
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <small>BATCH HISTORY / TRACEABILITY</small>
+          <h1>Inspection Batch Timeline</h1>
+        </div>
+
+        <input type="text" id="searchInput" placeholder="Search vendor or stall...">
+      </header>
+
+      <section id="historyList" class="history-list"></section>
+    </main>
+  </div>
+
+  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/history.js"></script>
+</body>
+</html>

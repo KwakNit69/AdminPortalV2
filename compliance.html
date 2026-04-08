@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Monitoring</title>
+
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/compliance.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <small>COMPLIANCE / FOOD SAFETY</small>
+          <h1>Vendor Compliance Monitoring</h1>
+        </div>
+      </header>
+
+      <section class="compliance-grid">
+        <div class="compliance-card">
+          <h3>Critical Vendors</h3>
+          <div id="criticalVendorList"></div>
+        </div>
+
+        <div class="compliance-card">
+          <h3>Warning Vendors</h3>
+          <div id="warningVendorList"></div>
+        </div>
+      </section>
+
+      <section class="table-card">
+        <h3>Compliance Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor</th>
+              <th>Spoiled Count</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="complianceTableBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/compliance.js"></script>
+</body>
+</html>

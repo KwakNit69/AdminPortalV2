@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QualiMeat Dashboard</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <small>DASHBOARD / OVERVIEW</small>
+          <h1>Analytical Overview</h1>
+        </div>
+
+        <div class="top-actions">
+          <button>LAST 30 DAYS</button>
+          <button class="export">EXPORT DATA</button>
+        </div>
+      </header>
+
+      <!-- KPI Cards -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <small>TOTAL INSPECTIONS</small>
+          <h2 id="totalInspections">0</h2>
+        </div>
+
+        <div class="stat-card">
+          <small>FRESH SCANS</small>
+          <h2 id="freshScans">0</h2>
+        </div>
+
+        <div class="stat-card">
+          <small>SPOILED DETECTIONS</small>
+          <h2 id="spoiledScans">0</h2>
+        </div>
+
+        <div class="stat-card">
+          <small>ACTIVE VENDORS</small>
+          <h2 id="totalVendors">0</h2>
+        </div>
+      </section>
+
+      <!-- Charts + Performance -->
+      <section class="chart-layout">
+        <div class="chart-card">
+          <h3>30-Day Quality Trends</h3>
+         <div class="chart-canvas-wrapper">
+  <canvas id="qualityTrendChart"></canvas>
+</div>
+        </div>
+
+<div class="performance-card">
+  <h3>Top Performing Stalls</h3>
+  <div id="topStallsList"></div>
+</div>
+      </section>
+
+      <!-- Performance Table -->
+      <section class="table-card">
+  <h3>Recent Inspection Sessions</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Inspector</th>
+        <th>Vendor</th>
+        <th>Stall</th>
+        <th>Fresh</th>
+        <th>Spoiled</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="inspectionTableBody"></tbody>
+  </table>
+</section>
+
+    </main>
+  </div>
+  <script src="js/sidebar.js"></script>
+<script type="module" src="js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

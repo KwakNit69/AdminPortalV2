@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QualiMeat Digital Registry</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="register-wrapper">
+    <section class="register-shell">
+
+      <!-- LEFT PANEL -->
+      <div class="register-left">
+        <span class="eyebrow">NEW INSPECTION</span>
+
+        <h1>QualiMeat<br>Digital Registry.</h1>
+
+        <p>
+          Precision-driven onboarding for industrial meat
+          quality inspection. Join the network of certified
+          precision handlers.
+        </p>
+
+        <div class="feature-box">
+          <div class="feature-icon green">security</div>
+          <div>
+            <h3>SECURE ACCESS</h3>
+            <small>End-to-end encrypted protocol</small>
+          </div>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon blue">monitoring</div>
+          <div>
+            <h3>LIVE DIAGNOSTICS</h3>
+            <small>Real-time inspection sync</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="register-right">
+        <h2>Create Account</h2>
+        <p class="subtitle">Provide your professional credentials to begin.</p>
+
+        <form onsubmit="register(event)">
+          <label>FULL NAME</label>
+          <input type="text" placeholder="John Doe" required>
+
+          <div class="grid-2">
+            <div>
+              <label>EMAIL ADDRESS</label>
+              <input type="email" placeholder="name@company.com" required>
+            </div>
+            <div>
+              <label>CONFIRM EMAIL</label>
+              <input type="email" placeholder="Re-enter email" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label>PASSWORD</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+            <div>
+              <label>CONFIRM PASSWORD</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <button type="submit">REGISTER</button>
+        </form>
+
+        <div class="signin-text">
+          ALREADY REGISTERED?
+          <a href="index.html">SIGN IN</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

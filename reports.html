@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/reports.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <small>REPORTS / ANALYTICS</small>
+          <h1>Vendor Performance Reports</h1>
+        </div>
+
+        <button id="exportBtn">Export CSV</button>
+      </header>
+
+      <section class="report-grid">
+        <div class="report-card">
+          <h3>Top Vendors</h3>
+          <div id="topVendorList"></div>
+        </div>
+
+        <div class="report-card">
+          <h3>Most Spoiled Vendors</h3>
+          <div id="spoiledVendorList"></div>
+        </div>
+      </section>
+
+      <section class="table-card">
+        <h3>Vendor Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor</th>
+              <th>Inspections</th>
+              <th>Fresh</th>
+              <th>Spoiled</th>
+            </tr>
+          </thead>
+          <tbody id="vendorTableBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/reports.js"></script>
+</body>
+</html>

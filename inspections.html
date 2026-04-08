@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspection Records</title>
+
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/inspections.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <small>INSPECTIONS / MANAGEMENT</small>
+          <h1>Inspection Records</h1>
+        </div>
+
+        <input type="text" id="searchInput" placeholder="Search vendor or inspector...">
+      </header>
+
+<section class="table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Inspector</th>
+        <th>Vendor</th>
+        <th>Stall</th>
+        <th>Fresh</th>
+        <th>Spoiled</th>
+        <th>Date</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody id="inspectionTableBody"></tbody>
+  </table>
+</section>
+    </main>
+  </div>
+
+<script src="js/sidebar.js"></script>
+  <script type="module" src="js/inspections.js"></script>
+</body>
+</html>
