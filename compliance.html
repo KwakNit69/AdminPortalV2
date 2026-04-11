@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compliance Monitoring</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Compliance Monitoring</title>
 
-  <link rel="stylesheet" href="css/sidebar.css">
-  <link rel="stylesheet" href="css/compliance.css">
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/compliance.css" />
 </head>
 <body>
   <div class="dashboard-layout">
@@ -20,25 +20,27 @@
         </div>
       </header>
 
-      <section class="compliance-grid">
-        <div class="compliance-card">
+      <!-- TOP STATUS CARDS -->
+      <section class="report-grid">
+        <div class="report-card critical-card">
           <h3>Critical Vendors</h3>
-          <div id="criticalVendorList"></div>
+          <div id="criticalList"></div>
         </div>
 
-        <div class="compliance-card">
+        <div class="report-card warning-card">
           <h3>Warning Vendors</h3>
-          <div id="warningVendorList"></div>
+          <div id="warningList"></div>
         </div>
       </section>
 
-      <section class="table-card">
+      <!-- SUMMARY TABLE -->
+      <section class="summary-card">
         <h3>Compliance Summary</h3>
         <table>
           <thead>
             <tr>
               <th>Vendor</th>
-              <th>Spoiled Count</th>
+              <th>Spoiled Sessions</th>
               <th>Status</th>
             </tr>
           </thead>

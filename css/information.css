@@ -15,19 +15,26 @@ body {
   padding: 2rem;
 }
 
-.page-header {
-  margin-bottom: 2rem;
+.page-label {
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  margin: 0.5rem 0 2rem;
+  font-size: 2.2rem;
 }
 
 .table-card {
   background: white;
-  border-radius: 20px;
-  padding: 1.5rem;
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2rem;
   box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-  margin-bottom: 1.5rem;
 }
 
-h3 {
+.table-card h2 {
   margin-bottom: 1rem;
 }
 
@@ -36,8 +43,7 @@ table {
   border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
   padding: 1rem;
   border-bottom: 1px solid #e2e8f0;
   text-align: left;
@@ -46,4 +52,82 @@ td {
 th {
   color: #94a3b8;
   font-size: 0.85rem;
+}
+
+.clickable {
+  color: #16a34a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================
+   PREMIUM MODAL
+========================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-box {
+  width: 700px;
+  max-width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 28px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+.profile-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-header img {
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+.session-item {
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+}
+
+.delete-btn,
+.close-btn {
+  border: none;
+  padding: 0.9rem 1.2rem;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-right: 0.6rem;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.close-btn {
+  background: #dcfce7;
+  color: #16a34a;
 }

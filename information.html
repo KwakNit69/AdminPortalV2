@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Information Management</title>
 
   <link rel="stylesheet" href="css/sidebar.css">
@@ -13,16 +13,12 @@
     <div id="sidebar-container"></div>
 
     <main class="main-content">
-      <header class="page-header">
-        <div>
-          <small>INFORMATION / MANAGEMENT</small>
-          <h1>Inspectors & Stall Registry</h1>
-        </div>
-      </header>
+      <small class="page-label">INFORMATION / MANAGEMENT</small>
+      <h1>Inspectors & Stall Registry</h1>
 
       <!-- Inspectors -->
       <section class="table-card">
-        <h3>Inspectors</h3>
+        <h2>Inspectors</h2>
         <table>
           <thead>
             <tr>
@@ -30,13 +26,13 @@
               <th>Role</th>
             </tr>
           </thead>
-          <tbody id="inspectorTable"></tbody>
+          <tbody id="inspectorTableBody"></tbody>
         </table>
       </section>
 
       <!-- Stalls -->
       <section class="table-card">
-        <h3>Stalls</h3>
+        <h2>Stalls</h2>
         <table>
           <thead>
             <tr>
@@ -44,11 +40,17 @@
               <th>Vendor</th>
             </tr>
           </thead>
-          <tbody id="stallTable"></tbody>
+          <tbody id="stallTableBody"></tbody>
         </table>
       </section>
-
     </main>
+  </div>
+
+  <!-- PREMIUM MODAL -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div id="modalContent"></div>
+    </div>
   </div>
 
   <script src="js/sidebar.js"></script>

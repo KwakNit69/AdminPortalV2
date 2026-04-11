@@ -8,7 +8,6 @@ let vendorStats = {};
 
 async function loadReports() {
     const snapshot = await getDocs(collection(db, "inspections"));
-
     vendorStats = {};
 
     snapshot.forEach(doc => {
@@ -18,8 +17,8 @@ async function loadReports() {
         if (!vendorStats[vendor]) {
             vendorStats[vendor] = {
                 inspections: 0,
-                fresh: 0,
-                spoiled: 0
+                cleanSessions: 0,
+                spoiledSessions: 0
             };
         }
 
@@ -27,10 +26,15 @@ async function loadReports() {
 
         const scanHistory = data.scanHistory || [];
 
-        scanHistory.forEach(scan => {
-            if (scan.label === "Fresh") vendorStats[vendor].fresh++;
-            if (scan.label === "Spoiled") vendorStats[vendor].spoiled++;
-        });
+        const hasSpoiled = scanHistory.some(
+            scan => scan.label === "Spoiled"
+        );
+
+        if (hasSpoiled) {
+            vendorStats[vendor].spoiledSessions++;
+        } else {
+            vendorStats[vendor].cleanSessions++;
+        }
     });
 
     renderReports();
@@ -40,43 +44,48 @@ function renderReports() {
     const entries = Object.entries(vendorStats);
 
     const topVendors = [...entries]
-        .sort((a, b) => b[1].fresh - a[1].fresh)
+        .sort((a, b) => b[1].cleanSessions - a[1].cleanSessions)
         .slice(0, 5);
 
     const spoiledVendors = [...entries]
-        .sort((a, b) => b[1].spoiled - a[1].spoiled)
+        .sort((a, b) => b[1].spoiledSessions - a[1].spoiledSessions)
         .slice(0, 5);
 
+    // Top vendors
     document.getElementById("topVendorList").innerHTML =
         topVendors.map(([vendor, stats]) => `
             <div class="report-item">
-                ${vendor} — ${stats.fresh} fresh
+                <span>${vendor}</span>
+                <span class="clean-text">${stats.cleanSessions} clean</span>
             </div>
         `).join("");
 
+    // Most flagged
     document.getElementById("spoiledVendorList").innerHTML =
         spoiledVendors.map(([vendor, stats]) => `
             <div class="report-item">
-                ${vendor} — ${stats.spoiled} spoiled
+                <span>${vendor}</span>
+                <span class="flagged-text">${stats.spoiledSessions} flagged</span>
             </div>
         `).join("");
 
+    // Summary
     document.getElementById("vendorTableBody").innerHTML =
         entries.map(([vendor, stats]) => `
             <tr>
                 <td>${vendor}</td>
                 <td>${stats.inspections}</td>
-                <td>${stats.fresh}</td>
-                <td>${stats.spoiled}</td>
+                <td><span class="badge-clean">${stats.cleanSessions}</span></td>
+                <td><span class="badge-flagged">${stats.spoiledSessions}</span></td>
             </tr>
         `).join("");
 }
 
 document.getElementById("exportBtn").addEventListener("click", () => {
-    let csv = "Vendor,Inspections,Fresh,Spoiled\n";
+    let csv = "Vendor,Inspections,Clean Sessions,Flagged Sessions\n";
 
     Object.entries(vendorStats).forEach(([vendor, stats]) => {
-        csv += `${vendor},${stats.inspections},${stats.fresh},${stats.spoiled}\n`;
+        csv += `${vendor},${stats.inspections},${stats.cleanSessions},${stats.spoiledSessions}\n`;
     });
 
     const blob = new Blob([csv], { type: "text/csv" });
@@ -84,7 +93,7 @@ document.getElementById("exportBtn").addEventListener("click", () => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "vendor_report.csv";
+    a.download = "vendor_performance_report.csv";
     a.click();
 });
 
