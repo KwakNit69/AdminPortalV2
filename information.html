@@ -5,55 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Information Management</title>
 
+  <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" href="css/information.css">
 </head>
 <body>
-  <div class="dashboard-layout">
-    <div id="sidebar-container"></div>
+  
+  <div id="sidebar-container" class="sidebar"></div>
 
-    <main class="main-content">
-      <small class="page-label">INFORMATION / MANAGEMENT</small>
-      <h1>Inspectors & Stall Registry</h1>
+  <main class="main-content">
+    <small class="page-label">INFORMATION / MANAGEMENT</small>
+    <h1>Inspectors & Stall Registry</h1>
 
-      <!-- Inspectors -->
-      <section class="table-card">
-        <h2>Inspectors</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody id="inspectorTableBody"></tbody>
-        </table>
-      </section>
+    <section class="table-card">
+      <h2>Inspectors</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody id="inspectorTableBody"></tbody>
+      </table>
+    </section>
 
-      <!-- Stalls -->
-      <section class="table-card">
-        <h2>Stalls</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Stall Number</th>
-              <th>Vendor</th>
-            </tr>
-          </thead>
-          <tbody id="stallTableBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+    <section class="table-card">
+      <h2>Stalls</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stall Number</th>
+            <th>Vendor</th>
+            <th>QR Code</th>
+          </tr>
+        </thead>
+        <tbody id="stallTableBody"></tbody>
+      </table>
+    </section>
+  </main>
 
-  <!-- PREMIUM MODAL -->
   <div id="modalOverlay" class="modal-overlay hidden">
     <div class="modal-box">
       <div id="modalContent"></div>
     </div>
   </div>
 
-  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/sidebar.js"></script>
   <script type="module" src="js/information.js"></script>
 </body>
 </html>

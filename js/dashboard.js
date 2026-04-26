@@ -7,91 +7,100 @@ import {
 let qualityChart = null;
 
 async function loadDashboard() {
-    const snapshot = await getDocs(collection(db, "inspections"));
+    try {
+        const snapshot = await getDocs(collection(db, "inspections"));
 
-    let totalInspections = snapshot.size;
-    let fresh = 0;
-    let spoiled = 0;
-    let vendors = new Set();
+        let totalInspections = snapshot.size;
+        let FRESH = 0;
+        let SPOILED = 0;
+        let vendors = new Set();
 
-    const stallStats = {};
-    const dailyStats = {};
-    const recentRows = [];
+        const stallStats = {};
+        const dailyStats = {};
+        const recentRows = [];
 
-    snapshot.forEach(doc => {
-        const data = doc.data();
+        snapshot.forEach(doc => {
+            const data = doc.data();
 
-        if (data.vendorName) {
-            vendors.add(data.vendorName);
-        }
+            if (data.vendorName) {
+                vendors.add(data.vendorName);
+            }
 
-        const stall = data.stallNumber || "Unknown";
+            const stall = data.stallNumber || "Unknown";
 
-        if (!stallStats[stall]) {
-            stallStats[stall] = {
-                fresh: 0,
-                spoiled: 0
-            };
-        }
+            if (!stallStats[stall]) {
+                stallStats[stall] = {
+                    FRESH: 0,
+                    SPOILED: 0
+                };
+            }
 
-        let day = "Unknown";
-        let formattedDate = "-";
+            let day = "Unknown";
+            let formattedDate = "-";
 
-        if (data.timestamp?.toDate) {
-            const dateObj = data.timestamp.toDate();
-            day = dateObj.toLocaleDateString();
-            formattedDate = day;
-        }
+            // Safely handle Firestore timestamps
+            if (data.timestamp && typeof data.timestamp.toDate === 'function') {
+                const dateObj = data.timestamp.toDate();
+                day = dateObj.toLocaleDateString();
+                formattedDate = day;
+            } else if (data.timestamp) {
+                day = new Date(data.timestamp).toLocaleDateString();
+                formattedDate = day;
+            }
 
-        if (!dailyStats[day]) {
-            dailyStats[day] = { fresh: 0, spoiled: 0 };
-        }
+            if (!dailyStats[day]) {
+                dailyStats[day] = { FRESH: 0, SPOILED: 0 };
+            }
 
-        let freshCount = 0;
-        let spoiledCount = 0;
+            let FRESHCount = 0;
+            let SPOILEDCount = 0;
 
-        if (data.scanHistory) {
-            data.scanHistory.forEach(scan => {
-                if (scan.label === "Fresh") {
-                    fresh++;
-                    freshCount++;
-                    dailyStats[day].fresh++;
-                    stallStats[stall].fresh++;
-                }
+            if (data.scanHistory && Array.isArray(data.scanHistory)) {
+                data.scanHistory.forEach(scan => {
+                    // FIX: Make it case-insensitive to avoid string mismatch errors
+                    const label = (scan.label || "").toLowerCase();
 
-                if (scan.label === "Spoiled") {
-                    spoiled++;
-                    spoiledCount++;
-                    dailyStats[day].spoiled++;
-                    stallStats[stall].spoiled++;
-                }
+                    // This will safely catch "Fresh" and "Half-Fresh"
+                    if (label.includes("fresh")) { 
+                        FRESH++;
+                        FRESHCount++;
+                        dailyStats[day].FRESH++;
+                        stallStats[stall].FRESH++;
+                    } 
+                    if (label.includes("spoiled")) {
+                        SPOILED++;
+                        SPOILEDCount++;
+                        dailyStats[day].SPOILED++;
+                        stallStats[stall].SPOILED++;
+                    }
+                });
+            }
+
+            recentRows.push({
+                inspector: data.inspectorName || "Unknown",
+                vendor: data.vendorName || "Unknown",
+                stall,
+                fresh: FRESHCount,
+                spoiled: SPOILEDCount,
+                date: formattedDate
             });
-        }
-
-        recentRows.push({
-            inspector: data.inspectorName || "Unknown",
-            vendor: data.vendorName || "Unknown",
-            stall,
-            fresh: freshCount,
-            spoiled: spoiledCount,
-            date: formattedDate
         });
-    });
 
-    // KPI updates
-    document.getElementById("totalInspections").textContent = totalInspections;
-    document.getElementById("freshScans").textContent = fresh;
-    document.getElementById("spoiledScans").textContent = spoiled;
-    document.getElementById("totalVendors").textContent = vendors.size;
+        // KPI updates with safe DOM checks
+        if (document.getElementById("totalInspections")) document.getElementById("totalInspections").textContent = totalInspections;
+        if (document.getElementById("freshScans")) document.getElementById("freshScans").textContent = FRESH;
+        if (document.getElementById("spoiledScans")) document.getElementById("spoiledScans").textContent = SPOILED;
+        if (document.getElementById("totalVendors")) document.getElementById("totalVendors").textContent = vendors.size;
 
-    // chart
-    renderTrendChart(dailyStats);
+        // Render sections
+        renderTrendChart(dailyStats);
+        renderRecentInspections(recentRows);
+        renderTopStalls(stallStats);
 
-    // recent inspections table
-    renderRecentInspections(recentRows);
-
-    // top clean stalls
-    renderTopStalls(stallStats);
+    } catch (error) {
+        // FIX: Added error catching so you know if Firebase is blocking you
+        console.error("FIREBASE ERROR: Data failed to load. Check your Firestore Rules or internet connection.", error);
+    }
 }
 
 function renderTrendChart(dailyStats) {
@@ -99,14 +108,13 @@ function renderTrendChart(dailyStats) {
         (a, b) => new Date(a) - new Date(b)
     );
 
-    const freshData = labels.map(day => dailyStats[day].fresh);
-    const spoiledData = labels.map(day => dailyStats[day].spoiled);
+    const freshData = labels.map(day => dailyStats[day].FRESH);
+    const spoiledData = labels.map(day => dailyStats[day].SPOILED);
 
     const ctx = document.getElementById("qualityTrendChart");
 
     if (!ctx) return;
 
-    // prevent duplicate chart rendering
     if (qualityChart) {
         qualityChart.destroy();
     }
@@ -117,13 +125,13 @@ function renderTrendChart(dailyStats) {
             labels,
             datasets: [
                 {
-                    label: "Fresh",
+                    label: "FRESH",
                     data: freshData,
                     backgroundColor: "#22c55e",
                     borderRadius: 6
                 },
                 {
-                    label: "Spoiled",
+                    label: "SPOILED",
                     data: spoiledData,
                     backgroundColor: "#ef4444",
                     borderRadius: 6
@@ -174,13 +182,14 @@ function renderTopStalls(stallStats) {
     if (!container) return;
 
     const topStalls = Object.entries(stallStats)
-        .filter(([stall, stats]) => stats.spoiled === 0 && stats.fresh > 0)
-        .sort((a, b) => b[1].fresh - a[1].fresh)
+        .filter(([stall, stats]) => stats.SPOILED === 0 && stats.FRESH > 0)
+        .sort((a, b) => b[1].FRESH - a[1].FRESH)
         .slice(0, 10);
 
     container.innerHTML = topStalls
         .map(([stall, stats]) => {
-            const width = Math.min(stats.fresh * 10, 100);
+            // FIX: Changed stats.fresh to stats.FRESH so the math actually works
+            const width = Math.min(stats.FRESH * 10, 100);
 
             return `
                 <div class="progress-item">
@@ -194,4 +203,7 @@ function renderTopStalls(stallStats) {
         .join("");
 }
 
-loadDashboard();
+// FIX: Wait for the HTML to fully load before trying to push data into it!
+document.addEventListener("DOMContentLoaded", () => {
+    loadDashboard();
+});

@@ -1,40 +1,47 @@
 import { db } from "./firebase-config.js";
-import {
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let allHistory = [];
 
 async function loadHistory() {
-    const snapshot = await getDocs(collection(db, "inspections"));
+    try {
+        const snapshot = await getDocs(collection(db, "inspections"));
+        allHistory = [];
 
-    allHistory = [];
+        snapshot.forEach(doc => {
+            const data = doc.data();
 
-    snapshot.forEach(doc => {
-        const data = doc.data();
+            let fresh = 0;
+            let spoiled = 0;
+            const scanHistory = data.scanHistory || [];
 
-        let fresh = 0;
-        let spoiled = 0;
+            scanHistory.forEach(scan => {
+                const label = (scan.label || "").toLowerCase();
+                if (label.includes("fresh")) fresh++;
+                if (label.includes("spoiled")) spoiled++;
+            });
 
-        const scanHistory = data.scanHistory || [];
+            let dateStr = "-";
+            if (data.timestamp && typeof data.timestamp.toDate === 'function') {
+                dateStr = data.timestamp.toDate().toLocaleDateString();
+            } else if (data.timestamp) {
+                dateStr = new Date(data.timestamp).toLocaleDateString();
+            }
 
-        scanHistory.forEach(scan => {
-            if (scan.label === "Fresh") fresh++;
-            if (scan.label === "Spoiled") spoiled++;
+            allHistory.push({
+                vendor: data.vendorName || "Unknown Vendor",
+                stall: data.stallNumber || "-",
+                inspector: data.inspectorName || "Unknown",
+                fresh,
+                spoiled,
+                date: dateStr
+            });
         });
 
-        allHistory.push({
-            vendor: data.vendorName || "Unknown Vendor",
-            stall: data.stallNumber || "-",
-            inspector: data.inspectorName || "Unknown",
-            fresh,
-            spoiled,
-            date: data.timestamp?.toDate().toLocaleDateString() || "-"
-        });
-    });
-
-    renderHistory(allHistory);
+        renderHistory(allHistory);
+    } catch (error) {
+        console.error("Error loading history:", error);
+    }
 }
 
 function renderHistory(rows) {
@@ -46,13 +53,11 @@ function renderHistory(rows) {
         .map(row => `
             <div class="history-card">
                 <h3>${row.vendor}</h3>
-
                 <div class="history-meta">
                     <span>🏪 Stall ${row.stall}</span>
                     <span>👤 ${row.inspector}</span>
                     <span>📅 ${row.date}</span>
                 </div>
-
                 <div class="history-status">
                     <span class="badge fresh">Fresh: ${row.fresh}</span>
                     <span class="badge spoiled">Spoiled: ${row.spoiled}</span>
@@ -62,19 +67,17 @@ function renderHistory(rows) {
         .join("");
 }
 
-const searchInput = document.getElementById("searchInput");
-
-if (searchInput) {
-    searchInput.addEventListener("input", e => {
-        const value = e.target.value.toLowerCase();
-
-        const filtered = allHistory.filter(row =>
-            row.vendor.toLowerCase().includes(value) ||
-            row.stall.toLowerCase().includes(value)
-        );
-
-        renderHistory(filtered);
-    });
-}
-
-loadHistory();
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("input", e => {
+            const value = e.target.value.toLowerCase();
+            const filtered = allHistory.filter(row =>
+                row.vendor.toLowerCase().includes(value) ||
+                row.stall.toLowerCase().includes(value)
+            );
+            renderHistory(filtered);
+        });
+    }
+    loadHistory();
+});

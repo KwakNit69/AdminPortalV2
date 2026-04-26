@@ -1,38 +1,36 @@
 import { db } from "./firebase-config.js";
-import {
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let vendorCompliance = {};
 
 async function loadCompliance() {
-    const snapshot = await getDocs(collection(db, "inspections"));
-    vendorCompliance = {};
+    try {
+        const snapshot = await getDocs(collection(db, "inspections"));
+        vendorCompliance = {};
 
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        const vendor = data.vendorName || "Unknown Vendor";
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const vendor = data.vendorName || "Unknown Vendor";
 
-        if (!vendorCompliance[vendor]) {
-            vendorCompliance[vendor] = {
-                spoiledSessions: 0
-            };
-        }
+            if (!vendorCompliance[vendor]) {
+                vendorCompliance[vendor] = { spoiledSessions: 0 };
+            }
 
-        const scanHistory = data.scanHistory || [];
+            const scanHistory = data.scanHistory || [];
 
-        // 🚨 count session once if any spoiled exists
-        const hasSpoiled = scanHistory.some(
-            scan => scan.label === "Spoiled"
-        );
+            const hasSpoiled = scanHistory.some(scan => 
+                (scan.label || "").toLowerCase().includes("spoiled")
+            );
 
-        if (hasSpoiled) {
-            vendorCompliance[vendor].spoiledSessions++;
-        }
-    });
+            if (hasSpoiled) {
+                vendorCompliance[vendor].spoiledSessions++;
+            }
+        });
 
-    renderCompliance();
+        renderCompliance();
+    } catch (error) {
+        console.error("Error loading compliance:", error);
+    }
 }
 
 function getStatus(count) {
@@ -42,33 +40,20 @@ function getStatus(count) {
 }
 
 function getBadge(status) {
-    if (status === "CRITICAL") {
-        return `<span class="badge-critical">${status}</span>`;
-    }
-
-    if (status === "WARNING") {
-        return `<span class="badge-warning">${status}</span>`;
-    }
-
+    if (status === "CRITICAL") return `<span class="badge-critical">${status}</span>`;
+    if (status === "WARNING") return `<span class="badge-warning">${status}</span>`;
     return `<span class="badge-compliant">${status}</span>`;
 }
 
 function renderCompliance() {
     const entries = Object.entries(vendorCompliance);
 
-    const critical = entries.filter(
-        ([, stats]) => stats.spoiledSessions >= 3
-    );
+    const critical = entries.filter(([, stats]) => stats.spoiledSessions >= 3);
+    const warning = entries.filter(([, stats]) => stats.spoiledSessions >= 1 && stats.spoiledSessions < 3);
 
-    const warning = entries.filter(
-        ([, stats]) =>
-            stats.spoiledSessions >= 1 &&
-            stats.spoiledSessions < 3
-    );
-
-    // 🔴 Critical
-    document.getElementById("criticalList").innerHTML =
-        critical.length
+    const criticalList = document.getElementById("criticalList");
+    if (criticalList) {
+        criticalList.innerHTML = critical.length
             ? critical.map(([vendor, stats]) => `
                 <div class="report-item">
                     <span>${vendor}</span>
@@ -76,10 +61,11 @@ function renderCompliance() {
                 </div>
             `).join("")
             : `<div class="report-item"><span>No critical vendors</span></div>`;
+    }
 
-    // 🟠 Warning
-    document.getElementById("warningList").innerHTML =
-        warning.length
+    const warningList = document.getElementById("warningList");
+    if (warningList) {
+        warningList.innerHTML = warning.length
             ? warning.map(([vendor, stats]) => `
                 <div class="report-item">
                     <span>${vendor}</span>
@@ -87,12 +73,12 @@ function renderCompliance() {
                 </div>
             `).join("")
             : `<div class="report-item"><span>No warning vendors</span></div>`;
+    }
 
-    // 📋 Table
-    document.getElementById("complianceTableBody").innerHTML =
-        entries.map(([vendor, stats]) => {
+    const tableBody = document.getElementById("complianceTableBody");
+    if (tableBody) {
+        tableBody.innerHTML = entries.map(([vendor, stats]) => {
             const status = getStatus(stats.spoiledSessions);
-
             return `
                 <tr>
                     <td>${vendor}</td>
@@ -101,6 +87,9 @@ function renderCompliance() {
                 </tr>
             `;
         }).join("");
+    }
 }
 
-loadCompliance();
+document.addEventListener("DOMContentLoaded", () => {
+    loadCompliance();
+});

@@ -5,52 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vendor Compliance Monitoring</title>
 
-  <link rel="stylesheet" href="css/sidebar.css" />
-  <link rel="stylesheet" href="css/compliance.css" />
+  <link rel="stylesheet" href="css/global.css" /> 
+  <link rel="stylesheet" href="css/sidebar.css" /> <link rel="stylesheet" href="css/compliance.css" />
 </head>
 <body>
-  <div class="dashboard-layout">
-    <div id="sidebar-container"></div>
+  
+  <div id="sidebar-container" class="sidebar"></div>
 
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <small>COMPLIANCE / FOOD SAFETY</small>
-          <h1>Vendor Compliance Monitoring</h1>
-        </div>
-      </header>
+  <main class="main-content">
+    
+    <header class="page-header">
+      <div>
+        <small>COMPLIANCE / FOOD SAFETY</small>
+        <h1>Vendor Compliance Monitoring</h1>
+      </div>
+    </header>
 
-      <!-- TOP STATUS CARDS -->
-      <section class="report-grid">
-        <div class="report-card critical-card">
-          <h3>Critical Vendors</h3>
-          <div id="criticalList"></div>
-        </div>
+    <section class="report-grid">
+      <div class="report-card critical-card">
+        <h3>Critical Vendors</h3>
+        <div id="criticalList"></div>
+      </div>
 
-        <div class="report-card warning-card">
-          <h3>Warning Vendors</h3>
-          <div id="warningList"></div>
-        </div>
-      </section>
+      <div class="report-card warning-card">
+        <h3>Warning Vendors</h3>
+        <div id="warningList"></div>
+      </div>
+    </section>
 
-      <!-- SUMMARY TABLE -->
-      <section class="summary-card">
-        <h3>Compliance Summary</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Vendor</th>
-              <th>Spoiled Sessions</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="complianceTableBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+    <section class="summary-card">
+      <h3>Compliance Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th>Spoiled Sessions</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="complianceTableBody"></tbody>
+      </table>
+    </section>
+    
+  </main>
 
-  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/sidebar.js"></script>
   <script type="module" src="js/compliance.js"></script>
 </body>
 </html>

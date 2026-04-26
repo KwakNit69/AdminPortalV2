@@ -1,20 +1,4 @@
-body {
-  margin: 0;
-  background: #f8fafc;
-  font-family: Arial, sans-serif;
-  color: #0f172a;
-}
-
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: 2rem;
-}
-
+/* HEADER & SEARCH */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -29,6 +13,7 @@ body {
   width: 320px;
 }
 
+/* HISTORY LIST & CARDS */
 .history-list {
   display: flex;
   flex-direction: column;
@@ -61,6 +46,7 @@ body {
   gap: 1rem;
 }
 
+/* BADGES */
 .badge {
   padding: 0.5rem 0.9rem;
   border-radius: 999px;

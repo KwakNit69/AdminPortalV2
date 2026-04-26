@@ -47,6 +47,9 @@ function renderStalls(snapshot) {
     tbody.innerHTML = snapshot.docs.map(docSnap => {
         const data = docSnap.data();
 
+        // 🔥 SAME FORMAT AS YOUR FLUTTER QR
+        const qrData = `${data.stallNumber},${data.vendorName}`;
+
         return `
             <tr>
                 <td>
@@ -54,7 +57,15 @@ function renderStalls(snapshot) {
                         ${data.stallNumber}
                     </span>
                 </td>
+
                 <td>${data.vendorName}</td>
+
+                <!-- QR BUTTON -->
+                <td>
+                    <button class="qr-btn" onclick="showQR('${qrData}')">
+                        View QR
+                    </button>
+                </td>
             </tr>
         `;
     }).join("");
@@ -176,9 +187,7 @@ window.showStall = async function(stallNumber) {
     `);
 };
 
-/* =========================
-   DELETE FUNCTIONS
-========================= */
+
 window.deleteOne = async function(id) {
     await deleteDoc(doc(db, "inspections", id));
     location.reload();
@@ -204,6 +213,24 @@ window.deleteAllStall = async function(stallNumber) {
     }
 
     location.reload();
+};
+
+window.showQR = function(data) {
+    openModal(`
+        <h2 style="text-align:center;">Stall QR Code</h2>
+
+        <div style="display:flex; justify-content:center; margin:20px 0;">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(data)}" />
+        </div>
+
+        <p style="text-align:center; color:#64748b;">
+            ${data}
+        </p>
+
+        <div style="text-align:center;">
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    `);
 };
 
 loadPage();

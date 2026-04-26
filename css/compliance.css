@@ -1,20 +1,3 @@
-body {
-  margin: 0;
-  background: #f8fafc;
-  font-family: Arial, sans-serif;
-  color: #0f172a;
-}
-
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: 2rem;
-}
-
 /* HEADER */
 .page-header {
   margin-bottom: 2rem;

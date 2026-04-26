@@ -1,46 +1,52 @@
 import { db } from "./firebase-config.js";
-import {
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let allRows = [];
 
 async function loadInspections() {
-    const snapshot = await getDocs(collection(db, "inspections"));
+    try {
+        const snapshot = await getDocs(collection(db, "inspections"));
+        allRows = [];
 
-    allRows = [];
+        snapshot.forEach(doc => {
+            const data = doc.data();
 
-    snapshot.forEach(doc => {
-        const data = doc.data();
+            let fresh = 0;
+            let spoiled = 0;
+            const scanHistory = data.scanHistory || [];
 
-        let fresh = 0;
-        let spoiled = 0;
+            scanHistory.forEach(scan => {
+                const label = (scan.label || "").toLowerCase();
+                if (label.includes("fresh")) fresh++;
+                if (label.includes("spoiled")) spoiled++;
+            });
 
-        const scanHistory = data.scanHistory || [];
+            let dateStr = "-";
+            if (data.timestamp && typeof data.timestamp.toDate === 'function') {
+                dateStr = data.timestamp.toDate().toLocaleDateString();
+            } else if (data.timestamp) {
+                dateStr = new Date(data.timestamp).toLocaleDateString();
+            }
 
-        scanHistory.forEach(scan => {
-            if (scan.label === "Fresh") fresh++;
-            if (scan.label === "Spoiled") spoiled++;
+            allRows.push({
+                inspector: data.inspectorName || "Unknown",
+                vendor: data.vendorName || "Unknown",
+                stall: data.stallNumber || "-",
+                fresh,
+                spoiled,
+                date: dateStr,
+                scanHistory
+            });
         });
 
-        allRows.push({
-            inspector: data.inspectorName || "Unknown",
-            vendor: data.vendorName || "Unknown",
-            stall: data.stallNumber || "-",
-            fresh,
-            spoiled,
-            date: data.timestamp?.toDate().toLocaleDateString() || "-",
-            scanHistory
-        });
-    });
-
-    renderTable(allRows);
+        renderTable(allRows);
+    } catch (error) {
+        console.error("Error loading inspections:", error);
+    }
 }
 
 function renderTable(rows) {
     const tbody = document.getElementById("inspectionTableBody");
-
     if (!tbody) return;
 
     tbody.innerHTML = rows.map((row, index) => `
@@ -57,7 +63,6 @@ function renderTable(rows) {
                 </button>
             </td>
         </tr>
-
         <tr id="details-${index}" class="details-row" style="display:none;">
             <td colspan="7">
                 <div class="scan-history">
@@ -65,7 +70,7 @@ function renderTable(rows) {
                         ? row.scanHistory.map(scan => `
                             <div class="scan-item">
                                 <span>${scan.cut}</span>
-                                <strong class="${scan.label === "Fresh" ? "fresh" : "spoiled"}">
+                                <strong class="${(scan.label || "").toLowerCase().includes("fresh") ? "fresh" : "spoiled"}">
                                     ${scan.label}
                                 </strong>
                             </div>
@@ -81,25 +86,21 @@ function renderTable(rows) {
 window.toggleDetails = function(index) {
     const row = document.getElementById(`details-${index}`);
     if (!row) return;
-
-    row.style.display =
-        row.style.display === "none" ? "table-row" : "none";
+    row.style.display = row.style.display === "none" ? "table-row" : "none";
 };
 
-const searchInput = document.getElementById("searchInput");
-
-if (searchInput) {
-    searchInput.addEventListener("input", e => {
-        const value = e.target.value.toLowerCase();
-
-        const filtered = allRows.filter(row =>
-            row.vendor.toLowerCase().includes(value) ||
-            row.inspector.toLowerCase().includes(value) ||
-            row.stall.toLowerCase().includes(value)
-        );
-
-        renderTable(filtered);
-    });
-}
-
-loadInspections();
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("input", e => {
+            const value = e.target.value.toLowerCase();
+            const filtered = allRows.filter(row =>
+                row.vendor.toLowerCase().includes(value) ||
+                row.inspector.toLowerCase().includes(value) ||
+                row.stall.toLowerCase().includes(value)
+            );
+            renderTable(filtered);
+        });
+    }
+    loadInspections();
+});

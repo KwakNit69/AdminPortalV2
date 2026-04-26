@@ -1,21 +1,4 @@
-body {
-  margin: 0;
-  background: #f8fafc;
-  font-family: Arial, sans-serif;
-  color: #0f172a;
-}
-
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: 2rem;
-}
-
-/* HEADER */
+/* HEADER & EXPORT BUTTON */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -51,7 +34,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* GRID */
+/* GRID & CARDS */
 .report-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -122,6 +105,7 @@ tbody tr:hover {
   background: #f8fafc;
 }
 
+/* BADGES */
 .badge-clean {
   background: #dcfce7;
   color: #16a34a;

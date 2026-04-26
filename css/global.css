@@ -6,6 +6,7 @@
   --text: #0f172a;
   --muted: #64748b;
   --border: #e2e8f0;
+  --sidebar-width: 260px; /* Using a variable makes it easier to manage */
 }
 
 * {
@@ -15,14 +16,29 @@
   font-family: Inter, Arial, sans-serif;
 }
 
-body {
+html, body {
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden; /* Prevents side-to-side scrolling */
 }
 
-.premium-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 24px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+/* 🔥 SIDEBAR FIX: Lock it to the left edge permanently */
+.sidebar {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--card); /* Ensures the sidebar has a solid white background */
+  z-index: 1000; /* Keeps it layered above all charts and tables */
+  border-right: 1px solid var(--border); /* Matches the clean line in your dashboard */
+}
+
+/* 🔥 MAIN CONTENT FIX: Push it to the right */
+.main-content {
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width)); 
+  padding: 30px; 
+  min-height: 100vh;
+  box-sizing: border-box;
 }

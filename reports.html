@@ -5,54 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vendor Performance Reports</title>
 
+  <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/sidebar.css" />
   <link rel="stylesheet" href="css/reports.css" />
 </head>
 <body>
-  <div class="dashboard-layout">
-    <div id="sidebar-container"></div>
+  
+  <div id="sidebar-container" class="sidebar"></div>
 
-    <main class="main-content">
-      <header class="page-header">
-        <div>
-          <small>REPORTS / ANALYTICS</small>
-          <h1>Vendor Performance Reports</h1>
-        </div>
-        <button id="exportBtn" class="export-btn">Export CSV</button>
-      </header>
+  <main class="main-content">
+    
+    <header class="page-header">
+      <div>
+        <small>REPORTS / ANALYTICS</small>
+        <h1>Vendor Performance Reports</h1>
+      </div>
+      <button id="exportBtn" class="export-btn">Export CSV</button>
+    </header>
 
-      <!-- TOP REPORT CARDS -->
-      <section class="report-grid">
-        <div class="report-card">
-          <h3>Top Vendors</h3>
-          <div id="topVendorList"></div>
-        </div>
+    <section class="report-grid">
+      <div class="report-card">
+        <h3>Top Vendors</h3>
+        <div id="topVendorList"></div>
+      </div>
 
-        <div class="report-card">
-          <h3>Most Flagged Vendors</h3>
-          <div id="spoiledVendorList"></div>
-        </div>
-      </section>
+      <div class="report-card">
+        <h3>Most Flagged Vendors</h3>
+        <div id="spoiledVendorList"></div>
+      </div>
+    </section>
 
-      <!-- SUMMARY TABLE -->
-      <section class="summary-card">
-        <h3>Vendor Summary</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Vendor</th>
-              <th>Inspections</th>
-              <th>Clean Sessions</th>
-              <th>Flagged Sessions</th>
-            </tr>
-          </thead>
-          <tbody id="vendorTableBody"></tbody>
-        </table>
-      </section>
-    </main>
-  </div>
+    <section class="summary-card">
+      <h3>Vendor Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th>Inspections</th>
+            <th>Clean Sessions</th>
+            <th>Flagged Sessions</th>
+          </tr>
+        </thead>
+        <tbody id="vendorTableBody"></tbody>
+      </table>
+    </section>
+    
+  </main>
 
-  <script src="js/sidebar.js"></script>
+  <script type="module" src="js/sidebar.js"></script>
   <script type="module" src="js/reports.js"></script>
 </body>
 </html>
