@@ -5,6 +5,28 @@ let vendorCompliance = {};
 
 async function loadCompliance() {
     try {
+        const criticalList = document.getElementById("criticalList");
+        if (criticalList) criticalList.innerHTML = Array(2).fill(`
+            <div class="report-item">
+                <div class="skeleton sk-text" style="width: 50%; margin:0;"></div>
+                <div class="skeleton sk-text" style="width: 30%; margin:0;"></div>
+            </div>`).join("");
+
+        const warningList = document.getElementById("warningList");
+        if (warningList) warningList.innerHTML = Array(2).fill(`
+            <div class="report-item">
+                <div class="skeleton sk-text" style="width: 50%; margin:0;"></div>
+                <div class="skeleton sk-text" style="width: 30%; margin:0;"></div>
+            </div>`).join("");
+
+        const tableBody = document.getElementById("complianceTableBody");
+        if (tableBody) tableBody.innerHTML = Array(4).fill(`
+            <tr class="skeleton-row">
+                <td><div class="skeleton sk-text"></div></td>
+                <td><div class="skeleton sk-text" style="width: 40%;"></div></td>
+                <td><div class="skeleton sk-badge"></div></td>
+            </tr>`).join("");
+
         const snapshot = await getDocs(collection(db, "inspections"));
         vendorCompliance = {};
 
@@ -12,19 +34,14 @@ async function loadCompliance() {
             const data = doc.data();
             const vendor = data.vendorName || "Unknown Vendor";
 
-            if (!vendorCompliance[vendor]) {
-                vendorCompliance[vendor] = { spoiledSessions: 0 };
-            }
+            if (!vendorCompliance[vendor]) vendorCompliance[vendor] = { spoiledSessions: 0 };
 
             const scanHistory = data.scanHistory || [];
-
             const hasSpoiled = scanHistory.some(scan => 
                 (scan.label || "").toLowerCase().includes("spoiled")
             );
 
-            if (hasSpoiled) {
-                vendorCompliance[vendor].spoiledSessions++;
-            }
+            if (hasSpoiled) vendorCompliance[vendor].spoiledSessions++;
         });
 
         renderCompliance();
@@ -90,6 +107,4 @@ function renderCompliance() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadCompliance();
-});
+document.addEventListener("DOMContentLoaded", loadCompliance);

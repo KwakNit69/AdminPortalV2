@@ -5,6 +5,29 @@ let vendorStats = {};
 
 async function loadReports() {
     try {
+        const topList = document.getElementById("topVendorList");
+        if (topList) topList.innerHTML = Array(3).fill(`
+            <div class="report-item">
+                <div class="skeleton sk-text" style="width: 50%; margin:0;"></div>
+                <div class="skeleton sk-text" style="width: 30%; margin:0;"></div>
+            </div>`).join("");
+
+        const spoiledList = document.getElementById("spoiledVendorList");
+        if (spoiledList) spoiledList.innerHTML = Array(3).fill(`
+            <div class="report-item">
+                <div class="skeleton sk-text" style="width: 50%; margin:0;"></div>
+                <div class="skeleton sk-text" style="width: 30%; margin:0;"></div>
+            </div>`).join("");
+
+        const tableBody = document.getElementById("vendorTableBody");
+        if (tableBody) tableBody.innerHTML = Array(4).fill(`
+            <tr class="skeleton-row">
+                <td><div class="skeleton sk-text"></div></td>
+                <td><div class="skeleton sk-text" style="width: 50%;"></div></td>
+                <td><div class="skeleton sk-badge"></div></td>
+                <td><div class="skeleton sk-badge"></div></td>
+            </tr>`).join("");
+
         const snapshot = await getDocs(collection(db, "inspections"));
         vendorStats = {};
 
@@ -13,11 +36,7 @@ async function loadReports() {
             const vendor = data.vendorName || "Unknown Vendor";
 
             if (!vendorStats[vendor]) {
-                vendorStats[vendor] = {
-                    inspections: 0,
-                    cleanSessions: 0,
-                    spoiledSessions: 0
-                };
+                vendorStats[vendor] = { inspections: 0, cleanSessions: 0, spoiledSessions: 0 };
             }
 
             vendorStats[vendor].inspections++;
@@ -27,11 +46,8 @@ async function loadReports() {
                 (scan.label || "").toLowerCase().includes("spoiled")
             );
 
-            if (hasSpoiled) {
-                vendorStats[vendor].spoiledSessions++;
-            } else {
-                vendorStats[vendor].cleanSessions++;
-            }
+            if (hasSpoiled) vendorStats[vendor].spoiledSessions++;
+            else vendorStats[vendor].cleanSessions++;
         });
 
         renderReports();
@@ -42,33 +58,27 @@ async function loadReports() {
 
 function renderReports() {
     const entries = Object.entries(vendorStats);
-
-    const topVendors = [...entries]
-        .sort((a, b) => b[1].cleanSessions - a[1].cleanSessions)
-        .slice(0, 5);
-
-    const spoiledVendors = [...entries]
-        .sort((a, b) => b[1].spoiledSessions - a[1].spoiledSessions)
-        .slice(0, 5);
+    const topVendors = [...entries].sort((a, b) => b[1].cleanSessions - a[1].cleanSessions).slice(0, 5);
+    const spoiledVendors = [...entries].sort((a, b) => b[1].spoiledSessions - a[1].spoiledSessions).slice(0, 5);
 
     const topList = document.getElementById("topVendorList");
     if (topList) {
-        topList.innerHTML = topVendors.map(([vendor, stats]) => `
+        topList.innerHTML = topVendors.length ? topVendors.map(([vendor, stats]) => `
             <div class="report-item">
                 <span>${vendor}</span>
                 <span class="clean-text">${stats.cleanSessions} clean</span>
             </div>
-        `).join("");
+        `).join("") : `<div class="report-item"><span>No data</span></div>`;
     }
 
     const spoiledList = document.getElementById("spoiledVendorList");
     if (spoiledList) {
-        spoiledList.innerHTML = spoiledVendors.map(([vendor, stats]) => `
+        spoiledList.innerHTML = spoiledVendors.length ? spoiledVendors.map(([vendor, stats]) => `
             <div class="report-item">
                 <span>${vendor}</span>
                 <span class="flagged-text">${stats.spoiledSessions} flagged</span>
             </div>
-        `).join("");
+        `).join("") : `<div class="report-item"><span>No data</span></div>`;
     }
 
     const tableBody = document.getElementById("vendorTableBody");

@@ -5,12 +5,26 @@ let allRows = [];
 
 async function loadInspections() {
     try {
+        const tbody = document.getElementById("inspectionTableBody");
+        if (tbody) {
+            tbody.innerHTML = Array(6).fill(`
+                <tr class="skeleton-row">
+                    <td><div class="skeleton sk-text"></div></td>
+                    <td><div class="skeleton sk-text" style="width: 80%;"></div></td>
+                    <td><div class="skeleton sk-text" style="width: 50%;"></div></td>
+                    <td><div class="skeleton sk-text"></div></td>
+                    <td><div class="skeleton sk-text"></div></td>
+                    <td><div class="skeleton sk-text"></div></td>
+                    <td><div class="skeleton sk-text" style="width: 40px;"></div></td>
+                </tr>
+            `).join("");
+        }
+
         const snapshot = await getDocs(collection(db, "inspections"));
         allRows = [];
 
         snapshot.forEach(doc => {
             const data = doc.data();
-
             let fresh = 0;
             let spoiled = 0;
             const scanHistory = data.scanHistory || [];
@@ -58,9 +72,7 @@ function renderTable(rows) {
             <td>${row.spoiled}</td>
             <td>${row.date}</td>
             <td>
-                <button class="view-btn" onclick="toggleDetails(${index})">
-                    View
-                </button>
+                <button class="view-btn" onclick="toggleDetails(${index})">View</button>
             </td>
         </tr>
         <tr id="details-${index}" class="details-row" style="display:none;">

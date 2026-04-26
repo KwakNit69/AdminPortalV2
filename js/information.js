@@ -9,21 +9,52 @@ import {
 let inspections = [];
 
 async function loadPage() {
-    const userSnap = await getDocs(collection(db, "users"));
-    const stallSnap = await getDocs(collection(db, "stalls"));
-    const inspectSnap = await getDocs(collection(db, "inspections"));
+    try {
+        // --- 1. INJECT SKELETONS BEFORE LOADING ---
+        const inspectorBody = document.getElementById("inspectorTableBody");
+        if (inspectorBody) {
+            inspectorBody.innerHTML = Array(3).fill(`
+                <tr class="skeleton-row">
+                    <td><div class="skeleton sk-text" style="width: 60%;"></div></td>
+                    <td><div class="skeleton sk-text" style="width: 40%;"></div></td>
+                </tr>
+            `).join("");
+        }
 
-    inspections = inspectSnap.docs.map(d => ({
-        id: d.id,
-        ...d.data()
-    }));
+        const stallBody = document.getElementById("stallTableBody");
+        if (stallBody) {
+            stallBody.innerHTML = Array(4).fill(`
+                <tr class="skeleton-row">
+                    <td><div class="skeleton sk-text" style="width: 30%;"></div></td>
+                    <td><div class="skeleton sk-text" style="width: 70%;"></div></td>
+                    <td><div class="skeleton sk-badge"></div></td>
+                </tr>
+            `).join("");
+        }
+        // ------------------------------------------
 
-    renderInspectors(userSnap);
-    renderStalls(stallSnap);
+        // 2. FETCH FIREBASE DATA
+        const userSnap = await getDocs(collection(db, "users"));
+        const stallSnap = await getDocs(collection(db, "stalls"));
+        const inspectSnap = await getDocs(collection(db, "inspections"));
+
+        inspections = inspectSnap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
+
+        // 3. RENDER REAL DATA
+        renderInspectors(userSnap);
+        renderStalls(stallSnap);
+
+    } catch (error) {
+        console.error("Error loading page data:", error);
+    }
 }
 
 function renderInspectors(snapshot) {
     const tbody = document.getElementById("inspectorTableBody");
+    if (!tbody) return;
 
     tbody.innerHTML = snapshot.docs.map(docSnap => {
         const data = docSnap.data();
@@ -43,6 +74,7 @@ function renderInspectors(snapshot) {
 
 function renderStalls(snapshot) {
     const tbody = document.getElementById("stallTableBody");
+    if (!tbody) return;
 
     tbody.innerHTML = snapshot.docs.map(docSnap => {
         const data = docSnap.data();
@@ -60,7 +92,6 @@ function renderStalls(snapshot) {
 
                 <td>${data.vendorName}</td>
 
-                <!-- QR BUTTON -->
                 <td>
                     <button class="qr-btn" onclick="showQR('${qrData}')">
                         View QR
@@ -75,12 +106,20 @@ function renderStalls(snapshot) {
    MODAL HELPERS
 ========================= */
 window.openModal = function(content) {
-    document.getElementById("modalContent").innerHTML = content;
-    document.getElementById("modalOverlay").classList.remove("hidden");
+    const modalContent = document.getElementById("modalContent");
+    const modalOverlay = document.getElementById("modalOverlay");
+    
+    if (modalContent && modalOverlay) {
+        modalContent.innerHTML = content;
+        modalOverlay.classList.remove("hidden");
+    }
 };
 
 window.closeModal = function() {
-    document.getElementById("modalOverlay").classList.add("hidden");
+    const modalOverlay = document.getElementById("modalOverlay");
+    if (modalOverlay) {
+        modalOverlay.classList.add("hidden");
+    }
 };
 
 /* =========================
@@ -187,7 +226,6 @@ window.showStall = async function(stallNumber) {
     `);
 };
 
-
 window.deleteOne = async function(id) {
     await deleteDoc(doc(db, "inspections", id));
     location.reload();
@@ -233,4 +271,7 @@ window.showQR = function(data) {
     `);
 };
 
-loadPage();
+// Wait for HTML to fully load before running the script
+document.addEventListener("DOMContentLoaded", () => {
+    loadPage();
+});

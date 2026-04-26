@@ -5,12 +5,26 @@ let allHistory = [];
 
 async function loadHistory() {
     try {
+        const container = document.getElementById("historyList");
+        if (container) {
+            container.innerHTML = Array(4).fill(`
+                <div class="skeleton-card">
+                    <div class="skeleton sk-title"></div>
+                    <div class="skeleton sk-text" style="width: 80%;"></div>
+                    <div class="skeleton sk-text" style="width: 50%;"></div>
+                    <div style="margin-top: 16px;">
+                        <div class="skeleton sk-badge"></div>
+                        <div class="skeleton sk-badge"></div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
         const snapshot = await getDocs(collection(db, "inspections"));
         allHistory = [];
 
         snapshot.forEach(doc => {
             const data = doc.data();
-
             let fresh = 0;
             let spoiled = 0;
             const scanHistory = data.scanHistory || [];
@@ -63,8 +77,7 @@ function renderHistory(rows) {
                     <span class="badge spoiled">Spoiled: ${row.spoiled}</span>
                 </div>
             </div>
-        `)
-        .join("");
+        `).join("");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
