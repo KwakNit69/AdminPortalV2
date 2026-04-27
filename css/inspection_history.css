@@ -1,0 +1,125 @@
+/* Note: body, .dashboard-layout, .main-content, and .topbar 
+   are inherited from your global/dashboard CSS if linked properly. */
+
+.hidden { display: none !important; }
+
+/* VIEW 1: STALL GRID */
+.search-bar { margin-bottom: 2rem; }
+.search-bar input { 
+  padding: 1rem 1.2rem; border-radius: 14px; border: 1px solid #e2e8f0; 
+  width: 100%; max-width: 400px; font-size: 0.95rem; outline: none; transition: 0.2s;
+}
+.search-bar input:focus { border-color: #22c55e; }
+
+.stall-grid { 
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; 
+}
+
+/* Matched to your dashboard's .stat-card */
+.stall-card { 
+  background: white; border-radius: 20px; padding: 1.5rem; text-align: center; 
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04); cursor: pointer; transition: 0.2s ease; border: 2px solid transparent; 
+}
+.stall-card:hover { transform: translateY(-4px); border-color: #22c55e; }
+
+.stall-img { 
+  width: 75px; height: 75px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; background: #e2e8f0; 
+}
+.stall-card h3 { margin: 0 0 0.5rem; font-size: 1.2rem; }
+.stall-card p { color: #64748b; margin: 0; font-size: 0.9rem; }
+
+
+/* VIEW 2: HISTORY LIST */
+.stall-profile-header { 
+  display: flex; align-items: center; gap: 1.5rem; background: white; 
+  padding: 1.5rem; border-radius: 20px; margin-bottom: 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.04); 
+}
+.stall-profile-header img { width: 70px; height: 70px; border-radius: 16px; object-fit: cover; }
+
+.history-list { display: flex; flex-direction: column; gap: 1rem; }
+.history-row { 
+  display: flex; justify-content: space-between; align-items: center; background: white; 
+  padding: 1.2rem 1.5rem; border-radius: 16px; cursor: pointer; transition: 0.2s; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; border-left: 5px solid transparent;
+}
+.history-row:hover { background: #f8fafc; border-left-color: #22c55e; transform: translateX(4px); }
+
+.row-info strong { display: block; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.row-info span { color: #64748b; font-size: 0.9rem; }
+.row-stats { display: flex; gap: 0.8rem; }
+
+
+/* VIEW 3: DETAILS */
+.detail-card { 
+  background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.04); 
+}
+.detail-header { border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+
+.scan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.scan-item { 
+  padding: 1rem; border-radius: 16px; border: 1px solid #e2e8f0; 
+  display: flex; justify-content: space-between; align-items: center; background: #f8fafc;
+}
+
+
+/* BADGES (Matched to Dashboard) */
+.badge { padding: 0.4rem 0.9rem; border-radius: 999px; font-weight: 700; font-size: 0.85rem; }
+.fresh { background: #dcfce7; color: #16a34a; }
+.spoiled { background: #fee2e2; color: #dc2626; }
+
+.text-fresh { color: #16a34a; font-weight: 700; }
+.text-spoiled { color: #dc2626; font-weight: 700; }
+
+
+/* SKELETON LOADER ANIMATION */
+.skeleton { 
+  background: #e2e5e7; 
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%); 
+  background-size: 200% 100%; animation: shimmer 1.5s infinite linear; border-radius: 4px; 
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.sk-avatar { height: 75px; width: 75px; border-radius: 50%; margin: 0 auto 1rem; }
+.sk-title { height: 20px; width: 60%; margin: 0 auto 10px; }
+.sk-text { height: 14px; width: 40%; margin: 0 auto; }
+
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.page-header small {
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.page-header h1 {
+  margin: 0.4rem 0 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+
+
+/* Clean "Back" button styling */
+.back-btn {
+    background: #A7F3D0 !important;
+    border: 1px solid #D1D5DB !important;
+    padding: 0.6rem 1.2rem !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    color: #374151 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    text-decoration: none !important;
+}
+
+.back-btn:hover {
+    background: #F3F4F6 !important;
+    border-color: #9CA3AF !important;
+}

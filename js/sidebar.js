@@ -14,11 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <nav class="menu">
         <a href="dashboard.html">Dashboard</a>
-        <a href="inspections.html">Inspections</a>
-        <a href="history.html">Batch History</a>
+        <a href="inspection_history.html">Inspection History</a>
         <a href="reports.html">Reports</a>
-        <a href="compliance.html">Compliance</a>
         <a href="information.html">Registry</a>
+        <a href="profile.html">Profile</a>
       </nav>
 
       <button id="logoutBtn" class="logout-btn">LOG OUT</button>

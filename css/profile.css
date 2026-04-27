@@ -1,0 +1,138 @@
+.hidden { display: none !important; }
+
+/* LAYOUT */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* CARDS */
+.profile-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #F3F4F6;
+}
+
+.text-center { text-align: center; }
+
+/* AVATAR SECTION */
+.avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 4px solid #F8F9FA;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.role-badge {
+    display: inline-block;
+    background: #D1FAE5;
+    color: #065F46;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.upload-btn {
+    background: #F3F4F6;
+    color: #374151;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 100%;
+    transition: 0.2s;
+}
+.upload-btn:hover { background: #E5E7EB; }
+
+/* FORM FIELDS */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7280;
+}
+
+.form-group input {
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #D1D5DB;
+    font-size: 0.95rem;
+    color: #1F2937;
+    background: #FFFFFF;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* PRIMARY BUTTON */
+.primary-btn {
+    background: #10B981;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    transition: 0.2s;
+}
+.primary-btn:hover { background: #059669; transform: translateY(-2px); }
+
+/* SKELETON LOADER ANIMATION */
+.skeleton { 
+    background: #E5E7EB; 
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%); 
+    background-size: 200% 100%; animation: shimmer 1.5s infinite linear; border-radius: 4px; 
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.sk-avatar { height: 120px; width: 120px; border-radius: 50%; margin: 0 auto 1rem; }
+.sk-input { height: 45px; width: 100%; border-radius: 10px; }
+.sk-label { height: 14px; width: 30%; margin-bottom: 0.5rem; }
+.sk-text { height: 16px; width: 60%; margin: 0 auto 1rem; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.topbar small {
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.topbar h1 {
+  margin: 0.4rem 0 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vendor Performance Reports</title>
+  <title>Vendor Performance & Compliance</title>
 
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/sidebar.css" />
@@ -11,46 +11,56 @@
 </head>
 <body>
   
-  <div id="sidebar-container" class="sidebar"></div>
+  <div class="dashboard-layout">
+    <div id="sidebar-container"></div>
 
-  <main class="main-content">
-    
-    <header class="page-header">
-      <div>
-        <small>REPORTS / ANALYTICS</small>
-        <h1>Vendor Performance Reports</h1>
-      </div>
-      <button id="exportBtn" class="export-btn">Export CSV</button>
-    </header>
+    <main class="main-content">
+      
+      <header class="page-header">
+        <div>
+          <small>REPORTS / COMPLIANCE</small>
+          <h1>Vendor Performance & Compliance</h1>
+        </div>
+        <button id="exportBtn" class="export-btn">Export CSV Report</button>
+      </header>
 
-    <section class="report-grid">
-      <div class="report-card">
-        <h3>Top Vendors</h3>
-        <div id="topVendorList"></div>
-      </div>
+      <section class="report-grid">
+        
+        <div class="report-card top-card">
+          <h3>Top Performing</h3>
+          <div id="topVendorList"></div>
+        </div>
 
-      <div class="report-card">
-        <h3>Most Flagged Vendors</h3>
-        <div id="spoiledVendorList"></div>
-      </div>
-    </section>
+        <div class="report-card warning-card">
+          <h3>Warning (1-2 Flagged)</h3>
+          <div id="warningVendorList"></div>
+        </div>
 
-    <section class="summary-card">
-      <h3>Vendor Summary</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Vendor</th>
-            <th>Inspections</th>
-            <th>Clean Sessions</th>
-            <th>Flagged Sessions</th>
-          </tr>
-        </thead>
-        <tbody id="vendorTableBody"></tbody>
-      </table>
-    </section>
-    
-  </main>
+        <div class="report-card critical-card">
+          <h3>Critical (3+ Flagged)</h3>
+          <div id="criticalVendorList"></div>
+        </div>
+
+      </section>
+
+      <section class="summary-card">
+        <h3>Comprehensive Vendor Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor Name</th>
+              <th>Total Inspections</th>
+              <th>Clean Sessions</th>
+              <th>Flagged Sessions</th>
+              <th>Compliance Status</th>
+            </tr>
+          </thead>
+          <tbody id="vendorTableBody"></tbody>
+        </table>
+      </section>
+      
+    </main>
+  </div>
 
   <script type="module" src="js/sidebar.js"></script>
   <script type="module" src="js/reports.js"></script>

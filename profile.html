@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - QualiMeat</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      
+      <header class="topbar">
+        <div>
+          <small>ACCOUNT SETTINGS</small>
+          <h1>My Profile</h1>
+        </div>
+
+        <div class="top-actions">
+          <button id="saveBtn" class="primary-btn hidden" onclick="saveProfile()">
+            SAVE CHANGES
+          </button>
+        </div>
+      </header>
+
+      <div class="profile-grid">
+        
+        <div class="profile-card text-center" id="avatarSection">
+          </div>
+
+        <div class="profile-card" id="detailsSection">
+          <h2 style="margin-top: 0; margin-bottom: 1.5rem; color: #111827; font-size: 1.25rem;">Personal Information</h2>
+          </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="js/sidebar.js"></script>
+  <script type="module" src="js/profile.js"></script>
+</body>
+</html>

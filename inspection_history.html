@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspection History - QualiMeat</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/inspection_history.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+      
+      <header class="page-header">
+        <div>
+          <small>DRILL-DOWN</small>
+          <h1>Inspection History</h1>
+        </div>
+
+        <div class="top-actions">
+        <button id="backBtn" class="back-btn hidden" onclick="goBack()">
+          ← BACK TO STALLS
+        </button>
+        </div>
+      </header>
+
+      <div id="view1-stalls" class="view-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search by Stall or Vendor...">
+        </div>
+        <div id="stallGrid" class="stall-grid">
+          </div>
+      </div>
+
+      <div id="view2-history" class="view-section hidden">
+        <div class="stall-profile-header" id="selectedStallHeader">
+          </div>
+        <div class="history-list" id="stallHistoryList">
+          </div>
+      </div>
+
+      <div id="view3-details" class="view-section hidden">
+        <div class="detail-card" id="inspectionDetailCard">
+          </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="js/sidebar.js"></script>
+  <script type="module" src="js/inspection_history.js"></script>
+</body>
+</html>
